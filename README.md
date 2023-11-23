@@ -8,11 +8,15 @@ Membership-based business models are winning its popularity day by day. However,
 
 Leveraging the power of the blockchain, this solution empowers business owners to issue their own membership contracts. Optimized for autonomy and adaptability, customers can conveniently purchase memberships, minting their unique ERC-721 tokens at will.
 
-## The problem it solves
+## What it does
 
 Business owners can define key parameters such as the expiration of memberships, maximum number of memberships that can be issued, and custom refund policies, amongst other functionalities. This flexibility ensures that businesses of all scales and industries can easily tailor the contract to meet their specific needs.
 
 Additionally, the utility of metadata in ERC-721 tokens enables the recording of structural data adaptable to individualized business requirements. Be it real estate giant Mitsubishi Estate or the automobile powerhouse Mazda Motor Corporation or smart business owners in Tokyo Torch, each business can leverage this feature expand their business models and create new revenue streams regardless of their scale.
+
+## The problem it solves
+
+Unlock Protocol does not support ASTAR ecosystem officially. This project has successfully ported Unlock Protocol onto ASTAR ecosystem and implemented a demonstration frontend.
 
 ## Challenges
 
@@ -48,15 +52,15 @@ Because NFTs can be checked and verified quickly, they can be used to gate acces
 - create.ts: call factory's method to deploy membership token contract (`createLock`). Expiration, price, and token name are configurable.
 - purchase.ts: user can mint NFT for their own addresses or third party addresses (`purchase`)
 
-### Test on local
+### Test deployment on local
 
 ```bash
 > npx hardhat run scripts/deploy.ts --network local
 ...
 > UNLOCK_ADDRESS=0xabc npx hardhat run scripts/create.ts --network local
 # [YOUR ADDR]
-# create lock tx hash:  [TX HASH]
-# create lock address:  [DEPLOYED PUBLIC LOCK ADDRESS]
+# create lock tx hash: [TX HASH]
+# create lock address: [DEPLOYED PUBLIC LOCK ADDRESS]
 > PUBLIC_LOCK_ADDRESS=0x123 npx hardhat run scripts/purchase.ts --network local
 ...
 ```
