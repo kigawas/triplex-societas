@@ -4,29 +4,33 @@ import { toWei } from "@thirdweb-dev/react";
 import * as z from "zod";
 
 export const schema = z.object({
-  name: z.string().min(1, { message: "name cannot be empty." }),
-  expirationDuration: z.string().min(1, {
-    message: "expirationDuration cannot be empty.",
+  name: z.string().min(1, { message: "Name cannot be empty." }),
+  expirationDuration: z.coerce.bigint().gt(BigInt(0), {
+    message: "Duration must be positive.",
   }),
   tokenAddress: z.string().min(42).max(42).startsWith("0x", {
-    message: "tokenAddress must be a valid Ethereum address starting with 0x.",
+    message:
+      "Fee token contract address must be a valid Ethereum address starting with 0x.",
   }),
-  keyPrice: z.string().min(0, {
-    message: "keyPrice must be greater than or equal to 0.",
+  keyPrice: z.coerce.number().gte(0, {
+    message: "Membership price must be greater than or equal to 0.",
   }),
-  maxNumberOfKeys: z.number().min(1, {
-    message: "maxNumberOfKeys must be greater than or equal to 1. ",
+  maxNumberOfKeys: z.coerce.bigint().gt(BigInt(0), {
+    message: "Maximum number of members must be positive.",
   }),
 });
 
 export type Params = z.infer<typeof schema>;
 
 export const defaultValues: Params = {
-  expirationDuration:
-    "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+  expirationDuration: BigInt(
+    "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+  ),
   tokenAddress: ZERO_ADDRESS,
-  keyPrice: "0.0001",
-  maxNumberOfKeys: 100000000,
+  keyPrice: 0,
+  maxNumberOfKeys: BigInt(
+    "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+  ),
   name: "",
 };
 
@@ -43,10 +47,10 @@ export const toArgs = ({
   }
 
   return [
-    expirationDuration,
+    expirationDuration.toString(),
     tokenAddress,
     toWei(keyPrice),
-    maxNumberOfKeys,
+    maxNumberOfKeys.toString(),
     name,
     "0x" + bytesToHex(salt),
   ];
